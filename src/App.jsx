@@ -3,6 +3,7 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import Main from "./components/layouts/Main";
 import Banner from "./components/movie/banner/Banner";
 import HomePage from "./pages/HomePage";
+import MoviesDetailPage from "./pages/MoviesDetailPage";
 import MoviesPage from "./pages/MoviesPage";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             }
           ></Route>
           <Route path="/movies" element={<MoviesPage></MoviesPage>}></Route>
+          <Route path="/movie/:movieId" element={<MoviesDetailPage></MoviesDetailPage>}></Route>
         </Route>
       </Routes>
     </div>
