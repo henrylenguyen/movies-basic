@@ -9,7 +9,6 @@ const MoviesVideos = () => {
      fetcher
      );
     const videos = data?.results || [];
-    console.log("videos", videos);
 
 
   return (

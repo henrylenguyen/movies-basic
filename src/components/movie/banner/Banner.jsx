@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { fetcher } from "../../../config";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BannerItem from "./BannerItem";
-
+import { Autoplay } from "swiper";
 const Banner = () => {
   // const [movies, setMovies] = useState([])
   const { data: moviesList, error } = useSWR(
@@ -30,7 +30,14 @@ const Banner = () => {
 
   return (
     <section className="banner h-[500px]  page-container mb-10 overflow-hidden">
-      <Swiper>
+      <Swiper
+        loop={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+      >
         {movies.length > 0 &&
           movies.map((item) => (
             <SwiperSlide key={item.id}>

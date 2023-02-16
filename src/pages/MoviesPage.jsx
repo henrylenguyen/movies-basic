@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import MovieCard from "../components/movie/MovieCard";
 import { fetcher } from "../config";
+import useDebounce from "../hooks/useDebounce";
 
 //npm install @heroicons/react
 const MoviesPage = () => {
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/popular?api_key=77becd787af72c80307f0877b3a400f4`,
-    fetcher
+  const [filter, setFilter] = useState("");
+  const [url, setUrl] = useState(
+    "https://api.themoviedb.org/3/movie/popular?api_key=77becd787af72c80307f0877b3a400f4"
   );
+  const debounce = useDebounce(filter, 500);
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
+  const { data } = useSWR(url, fetcher);
+  useEffect(() => {
+    if (debounce) {
+      setUrl(
+        `https://api.themoviedb.org/3/search/movie?api_key=77becd787af72c80307f0877b3a400f4&query=${debounce}`
+      );
+    } else {
+      setUrl(
+        "https://api.themoviedb.org/3/movie/popular?api_key=77becd787af72c80307f0877b3a400f4"
+      );
+    }
+  }, [debounce]);
+
   const movies = data?.results || [];
 
   return (
@@ -19,6 +37,7 @@ const MoviesPage = () => {
             type="text"
             className="w-full p-3 bg-slate-800 "
             placeholder="Type here to search..."
+            onChange={handleFilterChange}
           />
         </div>
         <button className="bg-primary px-5 py-3  ">

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import MovieCreadits from "../components/movie/MovieCreadits";
 import MoviesVideos from "../components/movie/MoviesVideos";
+import SimilarMovies from "../components/movie/SimilarMovies";
 import { API_Key, fetcher } from "../config";
 
 const MoviesDetailPage = () => {
@@ -51,6 +52,7 @@ const MoviesDetailPage = () => {
       </p>
       <MovieCreadits></MovieCreadits>
       <MoviesVideos></MoviesVideos>
+      <SimilarMovies></SimilarMovies>
     </div>
   );
 };
