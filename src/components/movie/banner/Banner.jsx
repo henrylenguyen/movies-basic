@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
-import { fetcher } from "../../../config";
+import { fetcher, tmdbAPI } from "../../../config";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BannerItem from "./BannerItem";
 import { Autoplay } from "swiper";
 const Banner = () => {
   // const [movies, setMovies] = useState([])
   const { data: moviesList, error } = useSWR(
-    "https://api.themoviedb.org/3/movie/upcoming?api_key=77becd787af72c80307f0877b3a400f4",
+    tmdbAPI.getMovieList("upcoming"),
+   
     fetcher
   );
-  const { data: genreList } = useSWR(
-    "https://api.themoviedb.org/3/genre/movie/list?api_key=77becd787af72c80307f0877b3a400f4",
-    fetcher
-    );
+  const { data: genreList } = useSWR(tmdbAPI.getGenreMovie(), fetcher);
  
     // useEffect(() => {
     //   if (fetchMovie) {

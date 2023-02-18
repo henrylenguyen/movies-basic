@@ -2,14 +2,14 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { SwiperSlide, Swiper } from "swiper/react";
 import useSWR from "swr";
-import { API_Key, fetcher } from "../../config";
+import { API_Key, fetcher, tmdbAPI } from "../../config";
 import MovieCard from './MovieCard';
 const SimilarMovies = () => {
     const { movieId } = useParams();
     const { data } = useSWR(
-      `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${API_Key}`,
+      tmdbAPI.getMovieByInfor(movieId, "similar"),
       fetcher
-      );
+    );
     const movies = data?.results || [];
     
   return (

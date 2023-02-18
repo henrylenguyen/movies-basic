@@ -4,14 +4,11 @@ import useSWR from "swr";
 import MovieCreadits from "../components/movie/MovieCreadits";
 import MoviesVideos from "../components/movie/MoviesVideos";
 import SimilarMovies from "../components/movie/SimilarMovies";
-import { API_Key, fetcher } from "../config";
+import { fetcher, tmdbAPI } from "../config";
 
 const MoviesDetailPage = () => {
   const { movieId } = useParams();
-  const { data, error } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_Key}`,
-    fetcher
-  );
+  const { data, error } = useSWR(tmdbAPI.getMovieDetails(movieId), fetcher);
   if (!data) return null;
   const { backdrop_path, poster_path, title, genres, overview } = data;
   return (
@@ -21,13 +18,14 @@ const MoviesDetailPage = () => {
         <div
           className="w-full h-full bg-cover bg-no-repeat"
           style={{
-            background: `url(https://image.tmdb.org/t/p/original/${backdrop_path})`,
+          
+            background: `url(${tmdbAPI.imageOriginal(backdrop_path)})`,
           }}
         ></div>
       </div>
       <div className="w-full h-[400px] max-w-[800px] mx-auto -mt-[200px] relative z-10 pb-10">
         <img
-          src={`https://image.tmdb.org/t/p/original/${poster_path}`}
+          src={tmdbAPI.imageOriginal(poster_path)}
           alt=""
           className="w-full h-full  rounded-xl"
         />
